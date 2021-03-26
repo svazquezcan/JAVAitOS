@@ -4,7 +4,7 @@ import com.dto.WordFinderDTO;
 
 public interface WordFinderService {
 	
-	WordFinderDTO checkSoapLetter (WordFinderDTO wordFinderDTO);
+	WordFinderDTO checkWordFinder (WordFinderDTO wordFinderDTO);
 	
 	WordFinderDTO generateWordFinder();
 	

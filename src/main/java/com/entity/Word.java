@@ -15,7 +15,11 @@ public class Word {
 
 	private String word;
 	
-	//Constructor
+	//Constructors
+	
+	public Word() {
+		
+	}
 	
 	public Word (long idWord, String word){
 		this.idWord = idWord;
