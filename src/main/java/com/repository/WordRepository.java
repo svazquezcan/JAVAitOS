@@ -9,9 +9,5 @@ import com.entity.Word;
 public interface WordRepository extends JpaRepository<Word, Long> {
 	
 	List<Word> findAll();
-	Word findById();
 	
-	Word insertWord(Word word);
-	Word updateWord(Word word);
-	boolean deleteWord(Word word);
 }
