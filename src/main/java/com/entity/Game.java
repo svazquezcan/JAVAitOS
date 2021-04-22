@@ -1,30 +1,29 @@
 package com.entity;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Game {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idGame;
-	
 	private String username;
-	
 	private long duration;
+	private int unCompletedWords;
 	
-	//Constructor
-
+	public Game() {
+		
+	}
+	
 	public Game (long idGame, String username, long duration){
 		this.idGame = idGame;
 		this.username = username;
 		this.duration = duration;
 	}
-	
-	//Getters
 	
 	public long getIdGame() {
 		return this.idGame; 		
@@ -38,8 +37,6 @@ public class Game {
 		return this.duration;
 	}
 	
-	//Setters
-	
 	public void setIdGame(long idGame) {
 		this.idGame = idGame; 
 	}
@@ -50,5 +47,13 @@ public class Game {
 	
 	public void setDuration(long duration) {
 		this.duration = duration;
+	}
+
+	public int getUnCompletedWords() {
+		return unCompletedWords;
+	}
+
+	public void setUnCompletedWords(int unCompletedWords) {
+		this.unCompletedWords = unCompletedWords;
 	}
 }
