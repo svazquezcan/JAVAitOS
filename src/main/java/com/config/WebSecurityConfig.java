@@ -1,4 +1,4 @@
-package com.ldap;
+package com.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.anyRequest().fullyAuthenticated()
-				.and()
+				.and().csrf().disable()
 			.formLogin();
 	}
 
@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.ldapAuthentication()
 			 	.userSearchFilter("uid={0}")
 				.contextSource()
-					.url("ldap://localhost:8389/dc=springframework,dc=org");
+					.url("ldap://localhost:8389/dc=example,dc=com");
 	}
 
 }
