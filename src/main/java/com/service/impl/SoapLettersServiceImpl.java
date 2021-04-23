@@ -1,6 +1,7 @@
 package com.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -56,8 +57,11 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 
 	@Override
 	public SoapLetterDTO generateSoapLetter(String username) {
-		Page<Word> words = wordRepository.findAll(PageRequest.of(0, N_WORDS));
-		List<String> wordList=words.getContent().stream().map(w->w.getWord()).collect(Collectors.toList());
+		List<Word> words=wordRepository.findAll();
+		Collections.shuffle(words);
+		words=words.subList(0, N_WORDS);
+		int randomPage=RANDOM.nextInt();
+		List<String> wordList=words.stream().map(w->w.getWord()).collect(Collectors.toList());
 		String[][] soapLetterTable = new String[10][10];
 		List<Position> positions= new ArrayList<>();
 		Position position;
@@ -68,7 +72,7 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		game.setUnCompletedWords(N_WORDS);
 		game=gameRepository.save(game);
 		
-		for (Word word : words.getContent()) {
+		for (Word word : words) {
 			position=generateRandomPosition(word,soapLetterTable,positions);
 			positions.add(position);
 			System.out.println("WORD :"+word.getWord()+"ROW :"+position.getRow()+"COLUMN :"+position.getColumn()+"LETTERS :"+position.getnLetters()+"ORIENTATION :"+position.getOrientation());
