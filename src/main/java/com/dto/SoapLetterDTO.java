@@ -2,7 +2,11 @@ package com.dto;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Clase que cuyo objetivo consiste en la transferencia de datos entre cliente-servidor.
+ * @author aimry
+ *
+ */
 public class SoapLetterDTO {
 	
 	private long idGame;

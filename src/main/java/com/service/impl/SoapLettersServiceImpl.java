@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 import com.dto.SoapLetterDTO;
 import com.entity.Game;
 import com.entity.Word;
@@ -31,8 +31,9 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 
 	private static final String LETTERS = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 	
-	
-
+	/**
+	 * Comrpueba la palabra y el juego, si ha terminado y si la palabra es válida.
+	 */
 	@Override
 	public SoapLetterDTO checkSoapLetter(SoapLetterDTO soapLetterDTO) {
 		
@@ -55,12 +56,15 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		return soapLetterDTO;
 	}
 
+	/**
+	 * Genera la sopa de letras de forma aleatoria
+	 */
 	@Override
 	public SoapLetterDTO generateSoapLetter(String username) {
+		//Se obtienen las palabras de la base de datos y d estás se escogen N_WORDS
 		List<Word> words=wordRepository.findAll();
 		Collections.shuffle(words);
 		words=words.subList(0, N_WORDS);
-		int randomPage=RANDOM.nextInt();
 		List<String> wordList=words.stream().map(w->w.getWord()).collect(Collectors.toList());
 		String[][] soapLetterTable = new String[10][10];
 		List<Position> positions= new ArrayList<>();
@@ -68,14 +72,15 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		Game game=new Game();
 		SoapLetterDTO soapLetterDTO= new SoapLetterDTO();
 		
+		//Se registra el juego con este usuario y se alamcena en la base de datos
 		game.setUsername(username);
 		game.setUnCompletedWords(N_WORDS);
 		game=gameRepository.save(game);
 		
+		//Se generan las palabras en posiciones aleatorias
 		for (Word word : words) {
 			position=generateRandomPosition(word,soapLetterTable,positions);
 			positions.add(position);
-			System.out.println("WORD :"+word.getWord()+"ROW :"+position.getRow()+"COLUMN :"+position.getColumn()+"LETTERS :"+position.getnLetters()+"ORIENTATION :"+position.getOrientation());
 			fillWordInTable(word.getWord(), soapLetterTable, position);
 		}
 		fillTableWithRandomLetters(soapLetterTable);
@@ -88,6 +93,13 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 
 	}
 	
+	/**
+	 * Se genera una posición aleatoria en el tablero, que sea válida
+	 * @param word
+	 * @param soapLetterTable
+	 * @param positions
+	 * @return
+	 */
 	private Position generateRandomPosition(Word word,String[][] soapLetterTable, List<Position> positions) {
 		int column = 0, row = 0;
 		Orientation orientation = null;
@@ -102,7 +114,15 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		} while (positions.contains(position) || !checkPositionIfAvailable(word.getWord(),column,row,orientation,soapLetterTable));
 		return position;
 	}
-	
+	/**
+	 * Comprueba que la posición sea válida
+	 * @param word
+	 * @param column
+	 * @param row
+	 * @param orientation
+	 * @param table
+	 * @return
+	 */
 	private boolean checkPositionIfAvailable(String word,int column, int row, Orientation orientation, String[][] table) {
 		
 		if(table[row][column]==null && orientation==Orientation.RIGHT && (table[0].length-(column+1))>=word.length()) {
@@ -129,6 +149,11 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		return false;
 		
 	}
+	
+	/**
+	 * Rellena el tablero con letras aleatorias
+	 * @param soapLetter
+	 */
 	private void fillTableWithRandomLetters(String[][] soapLetter) {
 		for(int i=0;i<soapLetter.length;i++) {
 			for(int j=0;j<soapLetter[0].length;j++) {
@@ -139,6 +164,12 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		}
 	}
 	
+	/**
+	 * Rellena el tablero con la palabra.
+	 * @param word
+	 * @param soapLetter
+	 * @param position
+	 */
 	private void fillWordInTable(String word, String[][] soapLetter,Position position) {
 
 		for (int i = 0; i < word.length(); i++) {
@@ -155,6 +186,11 @@ public class SoapLettersServiceImpl implements SoapLettersService {
 		
 	}
 
+	/**
+	 * Clase auxiliar que representa una posición en el tablero.
+	 * @author aimry
+	 *
+	 */
   class	Position {
 		
 		private int row;

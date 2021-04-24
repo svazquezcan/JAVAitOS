@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.SoapLetterDTO;
 import com.service.SoapLettersService;
 
+/**
+ * Controlador que gestiona el juego
+ * @author aimry
+ *
+ */
 @RestController
 @RequestMapping("/soapletters")
 public class SoapLetterController {
@@ -19,6 +24,10 @@ public class SoapLetterController {
 	@Autowired
 	private SoapLettersService soapLettersService;
 	
+	/**
+	 * Genera la sopa de letra con palabras de la base de datos.
+	 * @return
+	 */
 	@GetMapping
 	public SoapLetterDTO getRandomSoapLetter() {
 		LdapUserDetailsImpl ldapDetails = (LdapUserDetailsImpl) SecurityContextHolder
@@ -26,6 +35,10 @@ public class SoapLetterController {
 		SoapLetterDTO soapLetterDTO=soapLettersService.generateSoapLetter(ldapDetails.getUsername());
 		return soapLetterDTO;
 	}
+	
+	/**
+	 * Comprueba la palabra recibida por el front y devuelve un resultado
+	 */
 	
 	@PostMapping("/check")
 	public SoapLetterDTO checkSoapLetter(@RequestBody SoapLetterDTO soapLetterDTO) {
