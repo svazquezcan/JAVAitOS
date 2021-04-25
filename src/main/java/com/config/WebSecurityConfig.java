@@ -23,7 +23,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.anyRequest().fullyAuthenticated()
 				.and().csrf().disable()
-			.formLogin();
+			.formLogin().and()  
+	        .httpBasic()  
+	        .and()  
+	        .logout()  
+	        .logoutUrl("/j_spring_security_logout") 
+	        .logoutSuccessUrl("/login")  
+	        ;   
 	}
 	
 	/**

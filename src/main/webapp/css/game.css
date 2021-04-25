@@ -1,0 +1,107 @@
+@font-face {
+  font-family: Raleway-Medium;
+  src: url('../fonts/raleway/Raleway-Medium.ttf');
+}
+
+body{
+	font-family: Raleway-Medium;
+	background-color: #B2ECE1;
+}
+
+#puzzle > div { /* rows */
+  width: 100%;
+  margin: 0 auto;
+}
+
+#puzzle{
+	padding-left:25px;
+}
+
+
+
+/* style for each square in the puzzle */
+.puzzleSquare {
+  height: 7vw;
+  width: 7vw;
+  text-transform: uppercase;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  font: 5vw sans-serif;
+  border-radius:10px;
+}
+@media only screen and (min-width: 600px) {
+  .puzzleSquare {
+    height: 3.5rem;
+    width: 3.5rem;
+    font: 2.5rem sans-serif;
+  }
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+/* indicates when a square has been selected */
+#puzzle .selected {
+  background-color: orange;
+}
+
+#puzzle .complete-word {
+  background-color: blue;
+}
+
+/* indicates that the square is part of a word that has been found */
+#puzzle .found {
+  background-color: blue;
+  color: white;
+}
+
+#puzzle .solved {
+  background-color: purple;
+  color: white;
+}
+
+/* indicates that all words have been found */
+#puzzle .complete {
+  background-color: green;
+}
+
+.margin-top-50{
+  margin-top: 50px;
+}
+
+.margin-top-10{
+  margin-top: 10px;
+}
+
+.margin-right-20{
+  margin-right: 20px;
+}
+
+
+.div-word-selected{
+	margin-top: 20%;
+}
+
+.div-word-selected .word-selected{
+	font-size: 20px;
+    font-weight: bold;
+}
+.font-weight-bold{
+	font-weight: bold;
+}
+
+h1{
+  color: #0C312A;
+  margin-top: 100px;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);
+}
+
+a{
+  color: #104239;
+}
+
+.bg-dark{
+  background-color:#186355!important;
+}
